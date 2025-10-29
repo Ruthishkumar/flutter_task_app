@@ -36,19 +36,25 @@ class CryptoController extends GetxController {
   void onInit() {
     super.onInit();
     fetchData();
+    startAutoRefresh();
   }
 
-  /// star timer for periodic data fetch
-  void startTimer() {
-    fetchData();
-    timer?.cancel();
+  /// Starts the periodic fetch every 10 seconds
+  void startAutoRefresh() {
+    stopAutoRefresh();
     timer = Timer.periodic(const Duration(seconds: 10), (_) => fetchData());
   }
 
   @override
   void onClose() {
-    timer?.cancel();
+    stopAutoRefresh();
     super.onClose();
+  }
+
+  /// Stops the periodic timer
+  void stopAutoRefresh() {
+    timer?.cancel();
+    timer = null;
   }
 
   /// fetch data from price and chart APIs method
@@ -72,7 +78,8 @@ class CryptoController extends GetxController {
   void changeCoin(CoinKey coin) {
     selectedCoin.value = coin;
     showDropdown.value = false;
-    startTimer();
+    fetchData();
+    startAutoRefresh();
   }
 
   /// drop down toggle method
