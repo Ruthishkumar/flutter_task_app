@@ -201,6 +201,16 @@ class _CryptoViewScreenState extends State<CryptoViewScreen> {
                               ),
                             ),
                           )
+                        : c.error.value != null
+                        ? Center(
+                            child: Text(
+                              'Some thing went wrong',
+                              style: AppStyles.instance.headerTextStyles(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
                         : LineChart(
                             LineChartData(
                               lineTouchData: LineTouchData(
