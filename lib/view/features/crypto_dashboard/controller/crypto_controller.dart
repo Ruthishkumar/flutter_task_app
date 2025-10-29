@@ -36,6 +36,12 @@ class CryptoController extends GetxController {
   void onInit() {
     super.onInit();
     fetchData();
+  }
+
+  /// star timer for periodic data fetch
+  void startTimer() {
+    fetchData();
+    timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 10), (_) => fetchData());
   }
 
@@ -66,7 +72,7 @@ class CryptoController extends GetxController {
   void changeCoin(CoinKey coin) {
     selectedCoin.value = coin;
     showDropdown.value = false;
-    fetchData();
+    startTimer();
   }
 
   /// drop down toggle method

@@ -18,9 +18,9 @@ class ApiInstance {
       InterceptorsWrapper(
         onResponse: (response, handler) {
           log('RESPONSE[${response.statusCode}] => DATA: ${response.data}');
-          return handler.next(response); // continue
+          return handler.next(response);
         },
-        onError: (DioException e, handler) {
+        onError: (DioException e, handler) async {
           log('ERROR[${e.response?.statusCode}] => MESSAGE: ${e.message}');
           return handler.next(e); // continue
         },
